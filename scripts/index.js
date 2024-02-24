@@ -1,23 +1,24 @@
-// создание карточек 
+const list = document.querySelector(".places__list");
+const cardTemplate = document.querySelector("#card-template");
+// создание карточек
 function createCard(cardData, onDelete) {
-  const cardTemplate = document.querySelector("#card-template");
   const card = cardTemplate.content.cloneNode(true);
 
-  const cardTitle = card.querySelector(".card__title")
   const deleteButton = card.querySelector(".card__delete-button");
+  const img = card.querySelector(".card__image");
 
-  cardTitle.textContent = cardData.title;
+  card.querySelector(".card__title").textContent = cardData.name;
+  img.src = cardData.link;
+  img.alt = cardData.name;
 
-  //оброботчик событий 
-  deleteButton.addEventListener("click", () => {
-    onDelete(card);
-  });
+  //обработчик событий
+  deleteButton.addEventListener("click", onDelete);
 
-  document.querySelector(".places__list").appendChild(card);
+  list.appendChild(card);
 }
 // удаление карточек
-function deleteCard(card) {
-  card.remove();
+function deleteCard(event) {
+  event.target.parentNode.remove();
 }
 // вызов на страницу
 initialCards.forEach((card) => {
