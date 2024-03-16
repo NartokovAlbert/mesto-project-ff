@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { initialCards } from "../components/cards";
+import { initialCards } from "../components/initialCards";
 import { openPopup, closePopup } from "../components/modal";
 import { createCard, deleteCard } from "../components/card";
 
@@ -10,7 +10,7 @@ const cardsList = document.querySelector(".places__list");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const newCardButton = document.querySelector(".profile__add-button");
 
-//профиль
+//профиль страницы
 const profileName = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
@@ -20,26 +20,26 @@ const popupProfileForm = document.forms['edit-profile'];
 const popupProfileNameInput = popupProfileForm.elements.name;
 const popupProfileDescriptionInput = popupProfileForm.elements.description;
 
-//новая карточка попап
+//новая карточка modal
 const popupAddCard = document.querySelector(".popup_type_new-card");
 const popupAddCardForm = document.forms['new-place'];
 const popupAddCardNameInput = popupAddCardForm.elements['place-name'];
 const popupAddCardLinkInput = popupAddCardForm.elements.link;
 
-//попап карточка
+//modal карточка
 const popupCard = document.querySelector(".popup_type_image");
 const popupCardImage = document.querySelector(".popup__image");
 const popupCardName = document.querySelector(".popup__caption");
 
-//кнопка закрытия попапа
+//кнопка закрытия Modal
 const closeButtons = document.querySelectorAll('.popup__close');
 
-//выводит карточки на страницу
+//вывод карт на страницу
 initialCards.forEach((item) => {
   cardsList.append(createCard(item, deleteCard, openPopupImage, likeCard));
 });
 
-//слушатель клика по кнопке редактирования профиля
+//кнопка редактирования профиля
 profileEditButton.addEventListener("click", () => {
   popupProfileNameInput.value = profileName.textContent;
   popupProfileDescriptionInput.value = profileDescription.textContent;
@@ -47,12 +47,12 @@ profileEditButton.addEventListener("click", () => {
   openPopup(popupProfile);
 });
 
-// слушатель клика по кнопке добавления карточки
+//кнопка добавления карточки
 newCardButton.addEventListener("click", () => {
   openPopup(popupAddCard);
 });
 
-//слушатель закрытия на все кнопки попапов
+//кнопки закрытия Modal 
 closeButtons.forEach(item => {
   item.addEventListener("click", (evt) => {
     const popup = evt.target.closest('.popup');
@@ -63,7 +63,7 @@ closeButtons.forEach(item => {
 
 
 
-//функция открытия попапа с изображением
+//функция открытия Modal с изображением
 function openPopupImage(evt) {
   popupCardImage.src = evt.target.src;
   popupCardImage.alt = evt.target.alt;
@@ -74,22 +74,22 @@ function openPopupImage(evt) {
 
 
 
-//коллбэк добавления лайка
-function likeCard(evt) {
+//функция  лайка
+const likeCard = (evt) => {
   evt.target.classList.toggle("card__like-button_is-active");
-}
+  }
 
 
 
 //коллбэк сохранения данных формы изменения профиля
-function handleFormSubmit(evt) {
+const handleFormSubmit = (evt) => {
   evt.preventDefault();
-
+  
   profileName.textContent = popupProfileNameInput.value;
   profileDescription.textContent = popupProfileDescriptionInput.value;
-
+  
   closePopup(popupProfile);
-}
+  };
 
 //слушатель клика по кнопке сохранения формы профиля
 popupProfileForm.addEventListener('submit', handleFormSubmit);
@@ -97,18 +97,18 @@ popupProfileForm.addEventListener('submit', handleFormSubmit);
 
 
 //коллбэк сохранения данных формы добавления карточки
-function handleCardFormSubmit(evt) {
+const handleCardFormSubmit = (evt) => {
   evt.preventDefault();
-
+  
   const card = {};
   card.name = popupAddCardNameInput.value;
   card.link = popupAddCardLinkInput.value;
-
+  
   cardsList.prepend(createCard(card, deleteCard, openPopupImage, likeCard));
-
+  
   closePopup(popupAddCard);
   popupAddCardForm.reset();
-}
+  };
 
 //слушатель клика по кнопке сохранения формы добавления карточки
 popupAddCardForm.addEventListener('submit', handleCardFormSubmit);

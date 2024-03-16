@@ -1,14 +1,14 @@
-//вызов из глобальной области видимости
+//стили для Modal
 const config = {
   openPopupClass: "popup_is-opened",
   animatedPopupClass: "popup_is-animated",
 };
 
-//функция открытия попапа
+//функция открытия Modal
 export function openPopup(popup) {
   popup.classList.add(config.animatedPopupClass);
 
-//добавляем таймаут для добавления класса после анимации      
+//добавляем таймаут для класса анимации      
   setTimeout(() => {
     popup.classList.add(config.openPopupClass);
   }, 0);
@@ -17,20 +17,20 @@ export function openPopup(popup) {
   document.addEventListener("mousedown", closePopupByOverlay);
 }
 
-//функция закрытия попапа
+//функция закрытия Modal
 export function closePopup(popup) {
   popup.classList.remove(config.openPopupClass);
 
-//откладываем удаление на время работы анимации      
+//замедление анимации     
   setTimeout(() => {
     popup.classList.remove(config.animatedPopupClass);
-  }, 600);
+  }, 500);
 
   document.removeEventListener("keydown", closePopupByESC);
   document.removeEventListener("mousedown", closePopupByOverlay);
 }
 
-//функция закрытия попапа кнопкой ESC
+//функция закрытия Modal кнопкой ESC
 function closePopupByESC(evt) {
   if (evt.key === "Escape") {
     const openedPopup = document.querySelector("." + config.openPopupClass);
@@ -39,7 +39,7 @@ function closePopupByESC(evt) {
   }
 }
 
-//функция закрытия попапа по оверлэю      
+//функция закрытия Modal по оверлэю      
 function closePopupByOverlay(evt) {
   if (evt.target.classList.contains(config.openPopupClass)) {
     closePopup(evt.target);
