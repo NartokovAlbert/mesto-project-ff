@@ -1,3 +1,5 @@
+import { addLikeCard, userDeleteCard, removeCardLike } from "../components/myApi"
+
 const cardTemplate = document.querySelector("#card-template").content;
 //создание карточки
 export const createCard = (card, deleteFunction, openPopupCardFunc, likeFunc) => {
@@ -24,4 +26,6 @@ export const deleteCard = (evt) => {
   const card = evt.target.closest(".card");
   card.remove();
   }
+
+  
 
