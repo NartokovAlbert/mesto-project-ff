@@ -5,7 +5,7 @@ const config = {
 };
 
 //функция открытия Modal
-export function openPopup(popup) {
+ function openPopup(popup) {
   popup.classList.add(config.animatedPopupClass);
 
 //добавляем таймаут для класса анимации      
@@ -18,7 +18,7 @@ export function openPopup(popup) {
 }
 
 //функция закрытия Modal
-export function closePopup(popup) {
+ function closePopup(popup) {
   popup.classList.remove(config.openPopupClass);
 
 //замедление анимации     
@@ -45,3 +45,5 @@ function closePopupByOverlay(evt) {
     closePopup(evt.target);
   }
 }
+
+export {closePopup,openPopup}

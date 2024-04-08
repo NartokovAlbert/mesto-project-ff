@@ -1,127 +1,139 @@
+//Данные АПИ
 const config = {
-  baseUrl: "https://mesto.nomoreparties.co/v1/wff-cohort-10",
+  baseUrl: "https://nomoreparties.co/v1/wff-cohort-10",
   headers: {
     authorization: "029812ac-db75-4940-a281-61e95d3e0b25",
     "Content-Type": "application/json",
   },
 };
 
-// Проверка запроса
-function requestCheck(res) {
-  if (!res.ok) {
+//отправляем запроса
+const pullRequest = (res) => {
+  if (res.ok) {
+    return res.json();
+  } else {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
-  return res.json();
-}
-
-//Получение данных о пользователе
-export const userInfo = async () => {
-  try {
-    const res = await fetch(`${config.baseUrl}/users/me`, {
-      method: "GET",
-      headers: config.headers,
-    });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка", err);
-  }
 };
 
-//Получение данных о карточек
-export const cardsInfo = async () => {
-  try {
-    const res = await fetch(`${config.baseUrl}/cards`, {
-      headers: config.headers,
-    });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка", err);
-  }
+//Массив всех получаемых данных
+const allInfo = async () => {
+  return Promise.all([profileInfo(), profileCards()]);
 };
 
-//Ред.данные пользователя
-export const editUserData = async ({ name, about }) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        about,
-      }),
+//Загрузка данных о пользователе
+const profileInfo = async () => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
     });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка запроса", err);
-  }
-};
-//создать карточку
-export const createNewCard = async (name, link) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/cards`, {
-      method: "POST",
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        link,
-      }),
-    });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка запроса", err);
-  }
 };
 
-//Добавление лайка
-export const addLikeCard = async (cardId) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: config.headers,
+//Получаем информацию о карточке
+const profileCards = async () => {
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
     });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка запроса", err);
-  }
-};
-//Удаление лайка
-export const removeCardLike = async (cardId) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-      method: "DELETE",
-      headers: config.headers,
-    });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка запроса", err);
-  }
 };
 
-//удаление карточки
-export const userDeleteCard = async (cardId) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/cards/${cardId}`, {
-      method: "DELETE",
-      headers: config.headers,
+//Обновление  данных о пользователе
+const profileUserInfo = async (userProfileData) => {
+  return fetch(`${config.baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: userProfileData.name,
+      about: userProfileData.about,
+    }),
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
     });
-    return requestCheck(res);
-  } catch (err) {
-    console.log("ошибка удаления карточки", err);
-  }
 };
 
-//Изменить аватара
-export const userAvatar = async ({ avatar }) => {
-  try {
-    const res = await fetch(`${config.baseUrl}/users/me/avatar`, {
-      method: "PATCH",
-      headers: config.headers,
-      body: JSON.stringify({
-        avatar,
-      }),
+//Добавление карточек
+const getNewCard = async (cardData) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: "POST",
+    headers: config.headers,
+    body: JSON.stringify({
+      name: cardData.name,
+      link: cardData.link,
+    }),
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
     });
-    return requestCheck(res);
-  } catch (err) {
-    console.log(avatar, err);
-  }
+};
+
+//Поставили лайк
+const profileLike = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
+    });
+};
+
+//Удалили лайк
+const deleteLike = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
+    });
+};
+
+//Удаление карточки
+const deleteCardProfile = async (cardId) => {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: config.headers,
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
+    });
+};
+
+//Отправка аватара
+const profileAvatar = async (avatarLink) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatarLink,
+    }),
+  })
+    .then((res) => pullRequest(res))
+    .catch((err) => {
+      console.log("Ошибка", err);
+    });
+};
+
+export {
+  profileInfo,
+  profileCards,
+  allInfo,
+  profileUserInfo,
+  getNewCard,
+  profileLike,
+  deleteLike,
+  deleteCardProfile,
+  profileAvatar,
 };
