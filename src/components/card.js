@@ -40,17 +40,6 @@ function createCard(item, userId, deleteCard, likeIt, openCard) {
   return cardElement;
 }
 
-//Функция удаление карточки
-function deleteCard(cardId, cardElement) {
-  deleteCardProfile(cardId)
-    .then((res) => {
-      cardElement.remove();
-    })
-    .catch((err) => {
-      console.log("ошибка", err);
-    });
-}
-
 //Функция  лайка
 function likeIt(evt, cardId, cardElement) {
   const carrentLike = cardElement.querySelector(".card__like-count");
@@ -74,6 +63,24 @@ function likeIt(evt, cardId, cardElement) {
       });
   }
 }
+//Функция удаление карточки
+function deleteCard(cardId, cardElement) {
+  deleteCardProfile(cardId)
+    .then((res) => {
+      cardElement.remove();
+    })
+    .catch((err) => {
+      console.log("ошибка", err);
+    });
+}
+
+function openCard(itemLink, itemName) {
+  openPopup(popapCard);
+  popapImage.src = itemLink;
+  popapImage.alt = itemName;
+  popapCaption.textContent = itemName;
+};
+
 
 //export
 export { createCard, deleteCard, likeIt };
