@@ -25,22 +25,14 @@ const allInfo = async () => {
 const profileInfo = async () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Получаем информацию о карточке
 const profileCards = async () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Обновление  данных о пользователе
@@ -52,11 +44,7 @@ const profileUserInfo = async (userProfileData) => {
       name: userProfileData.name,
       about: userProfileData.about,
     }),
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Добавление карточек
@@ -68,11 +56,7 @@ const getNewCard = async (cardData) => {
       name: cardData.name,
       link: cardData.link,
     }),
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Поставили лайк
@@ -80,11 +64,7 @@ const profileLike = async (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Удалили лайк
@@ -92,11 +72,7 @@ const deleteLike = async (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Удаление карточки
@@ -104,11 +80,7 @@ const deleteCardProfile = async (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
     headers: config.headers,
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 //Отправка аватара
@@ -119,11 +91,7 @@ const profileAvatar = async (avatarLink) => {
     body: JSON.stringify({
       avatar: avatarLink,
     }),
-  })
-    .then((res) => pullRequest(res))
-    .catch((err) => {
-      console.log("Ошибка", err);
-    });
+  }).then((res) => pullRequest(res));
 };
 
 export {

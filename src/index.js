@@ -1,5 +1,5 @@
 import "./pages/index.css";
-import { createCard, deleteCard, likeIt} from "./components/card.js";
+import { createCard, deleteCard, likeIt } from "./components/card.js";
 import { openPopup, closePopup } from "./components/modal.js";
 import { enableValidation, clearValidation } from "./components/validation.js";
 import {
@@ -46,13 +46,13 @@ const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "button_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
+  inactiveButtonClass: ".button_inactive",
+  inputErrorClass: ".form__input_type_error",
+  errorClass: ".form__input-error_active",
 };
 
 //редактирование modal изменения профиля
-avatarEditButton.addEventListener("click", function (evt) {
+avatarEditButton.addEventListener("click", (evt) => {
   clearValidation(popapAvatarForm, validationConfig);
   popapAvatarForm.reset();
   openPopup(popapAvatar);
@@ -61,22 +61,20 @@ function handleAvatarFormSubmit(evt) {
   buttonSavePopapAvatar.textContent =
     buttonSavePopapAvatar.getAttribute("data-loading");
   evt.preventDefault();
-
   profileAvatar(popapAvatarForm.link.value)
     .then((updatedProfile) => {
       fillProfileInfo(updatedProfile);
       closePopup(popapAvatar);
     })
     .catch((err) => {
-      console.error(err);
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSavePopapAvatar.textContent =
+        buttonSavePopapAvatar.getAttribute("data-default-text");
     });
-
-  buttonSavePopapAvatar.textContent =
-    buttonSavePopapAvatar.getAttribute("data-default-text");
 }
 popapAvatarForm.addEventListener("submit", handleAvatarFormSubmit);
-
-
 
 //Редактирование профиля
 buttonPopapProfile.addEventListener("click", function () {
@@ -86,7 +84,7 @@ buttonPopapProfile.addEventListener("click", function () {
   jobInput.value = profileDescription.textContent;
 });
 
-function handleFormSubmit(evt) {
+function userFormSubmit(evt) {
   buttonSavePopapProfile.textContent =
     buttonSavePopapProfile.getAttribute("data-loading");
   evt.preventDefault();
@@ -97,15 +95,18 @@ function handleFormSubmit(evt) {
   })
     .then((updatedProfile) => {
       fillProfileInfo(updatedProfile);
-      closePopup(popapProfile);
+      clearValidation(popapProfile, validationConfig);
+      closePopup(formEditProfile);
     })
     .catch((err) => {
-      console.error(err);
+      console.log(err);
+    })
+    .finally(() => {
+      buttonSavePopapProfile.textContent =
+        buttonSavePopapProfile.getAttribute("data-default-text");
     });
-
-  buttonSavePopapProfile.textContent =
-    buttonSavePopapProfile.getAttribute("data-default-text");
 }
+formEditProfile.addEventListener("submit", userFormSubmit);
 
 //Добавление карточки
 buttonPopapAddCard.addEventListener("click", function () {
@@ -135,9 +136,6 @@ function addNewCard(evt) {
 }
 formNewPlace.addEventListener("submit", addNewCard);
 
-
-
-
 //Закрытие по клику на крестик и оверлей
 document.querySelectorAll(".popup__close").forEach((button) => {
   const buttonsPopup = button.closest(".popup");
@@ -149,7 +147,6 @@ document.querySelectorAll(".popup__close").forEach((button) => {
   });
 });
 
-
 enableValidation(validationConfig);
 
 function openCard(itemLink, itemName) {
@@ -157,8 +154,7 @@ function openCard(itemLink, itemName) {
   popapImage.src = itemLink;
   popapImage.alt = itemName;
   popapCaption.textContent = itemName;
-};
-
+}
 
 allInfo()
   .then((result) => {
@@ -172,6 +168,7 @@ allInfo()
     console.log(err);
   });
 
+//данные пользователя
 const fillProfileInfo = (userInfo) => {
   profileTitle.textContent = userInfo.name;
   profileDescription.textContent = userInfo.about;

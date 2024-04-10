@@ -85,11 +85,6 @@ const clearValidation = (formElement, formData) => {
   const inputList = Array.from(
     formElement.querySelectorAll(formData.inputSelector)
   );
-  const buttonElement = formElement.querySelector(
-    formData.submitButtonSelector
-  );
-  buttonElement.classList.add(formData.inactiveButtonClass);
-  buttonElement.disabled = true;
   inputList.forEach((inputElement) => {
     deleteError(formElement, inputElement, formData);
     inputElement.setCustomValidity("");

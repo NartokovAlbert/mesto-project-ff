@@ -74,12 +74,6 @@ function deleteCard(cardId, cardElement) {
     });
 }
 
-function openCard(itemLink, itemName) {
-  openPopup(popapCard);
-  popapImage.src = itemLink;
-  popapImage.alt = itemName;
-  popapCaption.textContent = itemName;
-};
 
 
 //export
