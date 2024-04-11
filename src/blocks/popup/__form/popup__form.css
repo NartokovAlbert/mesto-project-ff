@@ -1,3 +1,41 @@
 .popup__form {
   margin-top: 27px;
 }
+
+.form__input_type_error {
+  border-bottom-color: #f00;
+}
+
+.form__input-error {
+  display: none;
+  color: #f00;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.form__input-error_active {
+  display: block;
+  color: #f00;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.button_inactive {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
+  background: transparent;
+}
+
+.button_inactive:hover {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
+  background: transparent;
+}

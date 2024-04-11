@@ -46,9 +46,9 @@ const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
-  inactiveButtonClass: ".button_inactive",
-  inputErrorClass: ".form__input_type_error",
-  errorClass: ".form__input-error_active",
+  inactiveButtonClass: "button_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
 };
 
 //редактирование modal изменения профиля
@@ -63,7 +63,7 @@ function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
   profileAvatar(popapAvatarForm.link.value)
     .then((updatedProfile) => {
-      fillProfileInfo(updatedProfile);
+      avatar(updatedProfile);
       closePopup(popapAvatar);
     })
     .catch((err) => {
@@ -162,6 +162,7 @@ allInfo()
     userId = userInfo._id;
     const initialCards = result[1];
     fillProfileInfo(userInfo);
+    avatar(userInfo);
     renderInitialCards(initialCards, userId);
   })
   .catch((err) => {
@@ -172,6 +173,9 @@ allInfo()
 const fillProfileInfo = (userInfo) => {
   profileTitle.textContent = userInfo.name;
   profileDescription.textContent = userInfo.about;
+};
+
+const avatar = (userInfo) => {
   profileImage.style.backgroundImage = `url(${userInfo.avatar})`;
 };
 
